@@ -1,0 +1,35 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Environment files (sensitive!)
+.env
+.env.local
+.env.*.local
+
+# Build outputs
+dist/
+build/
+.next/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+
+# Prisma generated
+prisma/migrations/.DS_Store
+
+# Expo / React Native
+.expo/
+mobile/.expo/
+mobile/node_modules/
