@@ -29,7 +29,7 @@ export default function LoginScreen() {
     setLoading(true);
     try {
       const res = await authService.login(username.trim(), password);
-      await login(res.data.token, res.data.admin);
+      await login(res.data.token, res.data.user || res.data.admin);
     } catch (err: any) {
       const message =
         err.response?.data?.message || 'Login failed. Please check your credentials.';

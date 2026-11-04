@@ -28,7 +28,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       if (storedToken) {
         setTokenState(storedToken);
         const res = await authService.me();
-        setAdmin(res.data.admin);
+        setAdmin(res.data.user || res.data.admin);
       }
     } catch {
       await removeToken();
