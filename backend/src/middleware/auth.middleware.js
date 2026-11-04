@@ -19,7 +19,7 @@ const authenticate = async (req, res, next) => {
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     
-    const customer = await prisma.customer.findUnique({
+    let customer = await prisma.customer.findUnique({
       where: { id: decoded.userId },
       select: {
         id: true,
@@ -34,7 +34,28 @@ const authenticate = async (req, res, next) => {
     });
 
     if (!customer || customer.deletedAt) {
-      return res.status(401).json({ error: 'User not found' });
+      const admin = await prisma.admin.findUnique({
+        where: { id: decoded.userId },
+        select: {
+          id: true,
+          username: true,
+          email: true,
+          role: true,
+        },
+      });
+
+      if (!admin) {
+        return res.status(401).json({ error: 'User not found' });
+      }
+
+      req.user = {
+        id: admin.id,
+        idName: admin.username,
+        mailId: admin.email,
+        role: admin.role,
+      };
+      req.admin = admin;
+      return next();
     }
 
     req.user = customer;
