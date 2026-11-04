@@ -11,6 +11,7 @@
     },
     "android": {
       "package": "com.gurudev.coinmanagement",
+      "usesCleartextTraffic": true,
       "adaptiveIcon": {
         "backgroundColor": "#090d16",
         "foregroundImage": "./assets/android-icon-foreground.png",
@@ -21,6 +22,11 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "0716aacf-4fd6-445b-a626-1849bf82d97f"
+      }
     }
   }
 }

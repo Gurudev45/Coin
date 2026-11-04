@@ -32,7 +32,10 @@ export default function LoginScreen() {
       await login(res.data.token, res.data.user || res.data.admin);
     } catch (err: any) {
       const message =
-        err.response?.data?.message || 'Login failed. Please check your credentials.';
+        err.response?.data?.error ||
+        err.response?.data?.message ||
+        (err.message === 'Network Error' ? `Cannot connect to server at ${err.config?.url || 'backend'}. Check network/IP.` : err.message) ||
+        'Login failed. Please check your connection and credentials.';
       Alert.alert('Login Error', message);
     } finally {
       setLoading(false);
