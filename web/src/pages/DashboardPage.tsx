@@ -33,6 +33,16 @@ function StatCard({
   );
 }
 
+const formatDateSafe = (dateVal: any) => {
+  if (!dateVal) return '—';
+  try {
+    const d = new Date(dateVal);
+    return isNaN(d.getTime()) ? '—' : format(d, 'MMM d, yyyy');
+  } catch {
+    return '—';
+  }
+};
+
 export default function DashboardPage() {
   const [data, setData] = useState<DashboardData | null>(null);
   const [loading, setLoading] = useState(true);
@@ -191,7 +201,7 @@ export default function DashboardPage() {
                     <td className="table-cell text-right font-mono">{(c.balanceCoin ?? 0).toLocaleString()}</td>
                     <td className="table-cell text-right font-mono text-emerald-400">{(c.remainingCoin ?? 0).toLocaleString()}</td>
                     <td className="table-cell text-slate-400 text-xs">
-                      {c.createdAt ? format(new Date(c.createdAt), 'MMM d, yyyy') : '—'}
+                      {formatDateSafe(c.createdAt)}
                     </td>
                   </tr>
                 ))}
