@@ -5,13 +5,12 @@
 
 /**
  * Calculate Remaining Coin
- * Formula: Balance Coin - Withdraw Coin - Withdraw Fee
+ * Formula: Balance Coin - Withdraw Coin
  */
 function calculateRemainingCoin(balanceCoin, withdrawCoin, withdrawFee) {
   const balance = parseFloat(balanceCoin) || 0;
   const withdraw = parseFloat(withdrawCoin) || 0;
-  const fee = parseFloat(withdrawFee) || 0;
-  return balance - withdraw - fee;
+  return balance - withdraw;
 }
 
 /**

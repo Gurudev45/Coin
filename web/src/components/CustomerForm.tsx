@@ -44,7 +44,7 @@ export default function CustomerForm({ customer, onSuccess, isEdit = false }: Cu
   const balanceCoin = watch('balance_coin') ? parseFloat(String(watch('balance_coin'))) : 0;
   const withdrawCoin = watch('withdraw_coin') ? parseFloat(String(watch('withdraw_coin'))) : 0;
   const withdrawFee = watch('withdraw_fee') ? parseFloat(String(watch('withdraw_fee'))) : 0;
-  const rawRemaining = balanceCoin - withdrawCoin - withdrawFee;
+  const rawRemaining = balanceCoin - withdrawCoin;
   const remainingCoin = Math.round(rawRemaining * 100) / 100;
   const totalCoin = Math.round(balanceCoin * 100) / 100;
 
@@ -293,7 +293,7 @@ export default function CustomerForm({ customer, onSuccess, isEdit = false }: Cu
             <div className="input-field font-mono bg-slate-700/30 text-emerald-400 cursor-not-allowed">
               {Number.isInteger(remainingCoin) ? remainingCoin : remainingCoin.toFixed(2)}
             </div>
-            <p className="text-xs text-slate-500 mt-1">= Balance − Withdraw − Fee</p>
+            <p className="text-xs text-slate-500 mt-1">= Balance − Withdraw</p>
           </div>
 
           <div className="form-group">
