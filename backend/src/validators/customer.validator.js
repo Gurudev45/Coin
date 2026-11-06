@@ -53,6 +53,10 @@ const customerCreateValidators = [
   body('withdraw_fee')
     .optional({ nullable: true, checkFalsy: true })
     .isFloat().withMessage('Withdraw Fee must be a numeric value'),
+
+  body('net_coin')
+    .optional({ nullable: true, checkFalsy: true })
+    .isFloat().withMessage('Net Coin must be a numeric value'),
 ];
 
 const customerUpdateValidators = [

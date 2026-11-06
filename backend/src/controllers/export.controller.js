@@ -17,6 +17,7 @@ function sanitizeForExport(customers) {
     'Balance Coin': c.balanceCoin ?? 0,
     'Withdraw Coin': c.withdrawCoin ?? 0,
     'Withdraw Fee': c.withdrawFee ?? 0,
+    'Net Coin': c.netCoin ?? 0,
     'Remaining Coin': c.remainingCoin ?? 0,
     'Total Coin': c.totalCoin ?? 0,
   }));
@@ -48,6 +49,7 @@ async function exportExcel(req, res) {
       { header: 'Balance Coin', key: 'Balance Coin', width: 14 },
       { header: 'Withdraw Coin', key: 'Withdraw Coin', width: 14 },
       { header: 'Withdraw Fee', key: 'Withdraw Fee', width: 14 },
+      { header: 'Net Coin', key: 'Net Coin', width: 14 },
       { header: 'Remaining Coin', key: 'Remaining Coin', width: 14 },
       { header: 'Total Coin', key: 'Total Coin', width: 14 },
     ];
@@ -175,7 +177,7 @@ async function getFilteredCustomers(query) {
     select: {
       id: true, idName: true, date: true, mailId: true, mDate: true,
       fixedValue: true, regularValue: true, comboValue: true, arp: true,
-      balanceCoin: true, withdrawCoin: true, withdrawFee: true,
+      balanceCoin: true, withdrawCoin: true, withdrawFee: true, netCoin: true,
       remainingCoin: true, totalCoin: true, passwordHash: true,
     },
   });

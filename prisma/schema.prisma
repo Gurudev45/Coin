@@ -39,6 +39,7 @@ model Customer {
   withdrawFee   Float?        @default(0) @map("withdraw_fee")
   remainingCoin Float?        @default(0) @map("remaining_coin")
   totalCoin     Float?        @default(0) @map("total_coin")
+  netCoin       Float?        @default(0) @map("net_coin")
   createdAt     DateTime      @default(now()) @map("created_at")
   updatedAt     DateTime      @updatedAt @map("updated_at")
   deletedAt     DateTime?     @map("deleted_at")

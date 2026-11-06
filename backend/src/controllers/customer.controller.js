@@ -85,7 +85,7 @@ async function getCustomers(req, res) {
           id: true, idName: true, date: true, mailId: true, mDate: true,
           fixedValue: true, regularValue: true, comboValue: true, arp: true,
           balanceCoin: true, withdrawCoin: true, withdrawFee: true,
-          remainingCoin: true, totalCoin: true, createdAt: true, updatedAt: true,
+          remainingCoin: true, totalCoin: true, netCoin: true, createdAt: true, updatedAt: true,
           passwordHash: true,
         },
       }),
@@ -133,7 +133,7 @@ async function createCustomer(req, res) {
     const {
       id_name, date, mail_id, m_date, password,
       fixed_value, regular_value, combo_value, arp,
-      balance_coin, withdraw_coin, withdraw_fee,
+      balance_coin, withdraw_coin, withdraw_fee, net_coin,
     } = req.body;
 
     // Check uniqueness
@@ -171,6 +171,7 @@ async function createCustomer(req, res) {
         balanceCoin: balance_coin ? parseFloat(balance_coin) : 0,
         withdrawCoin: withdraw_coin ? parseFloat(withdraw_coin) : 0,
         withdrawFee: withdraw_fee ? parseFloat(withdraw_fee) : 0,
+        netCoin: net_coin !== undefined && net_coin !== null && net_coin !== '' ? parseFloat(net_coin) : 0,
         remainingCoin,
         totalCoin,
       },
@@ -210,7 +211,7 @@ async function updateCustomer(req, res) {
     const {
       id_name, date, mail_id, m_date,
       fixed_value, regular_value, combo_value, arp,
-      balance_coin, withdraw_coin, withdraw_fee,
+      balance_coin, withdraw_coin, withdraw_fee, net_coin,
     } = req.body;
 
     // Check id_name uniqueness if changed
@@ -247,6 +248,7 @@ async function updateCustomer(req, res) {
         balanceCoin: newBalanceCoin,
         withdrawCoin: newWithdrawCoin,
         withdrawFee: newWithdrawFee,
+        ...(net_coin !== undefined && { netCoin: net_coin !== null && net_coin !== '' ? parseFloat(net_coin) : 0 }),
         remainingCoin,
         totalCoin,
       },

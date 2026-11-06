@@ -37,6 +37,7 @@ export default function CustomerForm({ customer, onSuccess, isEdit = false }: Cu
       balance_coin: customer?.balanceCoin ?? undefined,
       withdraw_coin: customer?.withdrawCoin ?? undefined,
       withdraw_fee: customer?.withdrawFee ?? undefined,
+      net_coin: (customer as any)?.netCoin ?? undefined,
     },
   });
 
@@ -62,6 +63,7 @@ export default function CustomerForm({ customer, onSuccess, isEdit = false }: Cu
         balance_coin: data.balance_coin != null && data.balance_coin !== '' ? parseFloat(String(data.balance_coin)) : 0,
         withdraw_coin: data.withdraw_coin != null && data.withdraw_coin !== '' ? parseFloat(String(data.withdraw_coin)) : 0,
         withdraw_fee: data.withdraw_fee != null && data.withdraw_fee !== '' ? parseFloat(String(data.withdraw_fee)) : 0,
+        net_coin: data.net_coin != null && data.net_coin !== '' ? parseFloat(String(data.net_coin)) : 0,
         ...(!isEdit && data.password ? { password: data.password } : {}),
       };
 
@@ -265,6 +267,17 @@ export default function CustomerForm({ customer, onSuccess, isEdit = false }: Cu
               type="number"
               step="any"
               {...register('withdraw_fee')}
+              className="input-field font-mono"
+              placeholder=""
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="field-net-coin" className="label">Net Coin</label>
+            <input
+              id="field-net-coin"
+              type="number"
+              step="any"
+              {...register('net_coin')}
               className="input-field font-mono"
               placeholder=""
             />

@@ -15,6 +15,7 @@ export interface Customer {
   withdrawFee: number;
   remainingCoin: number;
   totalCoin: number;
+  netCoin?: number | null;
   createdAt: string;
   updatedAt: string;
 }
@@ -32,6 +33,7 @@ export interface CustomerFormData {
   balance_coin?: number;
   withdraw_coin?: number;
   withdraw_fee?: number;
+  net_coin?: number | null;
 }
 
 export interface Pagination {

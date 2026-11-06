@@ -204,6 +204,7 @@ export default function CustomersPage() {
                 </th>
                 <th className="table-header text-right">Withdraw</th>
                 <th className="table-header text-right">Fee</th>
+                <th className="table-header text-right">Net Coin</th>
                 <th className="table-header text-right cursor-pointer" onClick={() => handleSort('remainingCoin')}>
                   Remaining <SortBtn field="remainingCoin" />
                 </th>
@@ -214,7 +215,7 @@ export default function CustomersPage() {
             <tbody>
               {loading ? (
                 <tr>
-                  <td colSpan={14} className="text-center py-12 text-slate-400">
+                  <td colSpan={15} className="text-center py-12 text-slate-400">
                     <div className="flex items-center justify-center gap-3">
                       <div className="w-5 h-5 border-2 border-indigo-500 border-t-transparent rounded-full animate-spin" />
                       Loading IDs...
@@ -223,7 +224,7 @@ export default function CustomersPage() {
                 </tr>
               ) : customers.length === 0 ? (
                 <tr>
-                  <td colSpan={14} className="text-center py-12 text-slate-500">
+                  <td colSpan={15} className="text-center py-12 text-slate-500">
                     No IDs found
                   </td>
                 </tr>
@@ -246,6 +247,7 @@ export default function CustomersPage() {
                   <td className="table-cell text-right font-mono">{(c.balanceCoin ?? 0).toLocaleString()}</td>
                   <td className="table-cell text-right font-mono text-amber-400">{(c.withdrawCoin ?? 0).toLocaleString()}</td>
                   <td className="table-cell text-right font-mono text-rose-400">{(c.withdrawFee ?? 0).toLocaleString()}</td>
+                  <td className="table-cell text-right font-mono text-teal-400">{(c.netCoin ?? 0).toLocaleString()}</td>
                   <td className="table-cell text-right font-mono text-emerald-400 font-semibold">{(c.remainingCoin ?? 0).toLocaleString()}</td>
                   <td className="table-cell text-right font-mono">{(c.totalCoin ?? 0).toLocaleString()}</td>
                   <td className="table-cell">
