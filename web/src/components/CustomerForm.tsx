@@ -239,6 +239,17 @@ export default function CustomerForm({ customer, onSuccess, isEdit = false }: Cu
         </h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           <div className="form-group">
+            <label htmlFor="field-net-coin" className="label">Net Coin</label>
+            <input
+              id="field-net-coin"
+              type="number"
+              step="any"
+              {...register('net_coin')}
+              className="input-field font-mono"
+              placeholder=""
+            />
+          </div>
+          <div className="form-group">
             <label htmlFor="field-balance-coin" className="label">Balance Coin</label>
             <input
               id="field-balance-coin"
@@ -267,17 +278,6 @@ export default function CustomerForm({ customer, onSuccess, isEdit = false }: Cu
               type="number"
               step="any"
               {...register('withdraw_fee')}
-              className="input-field font-mono"
-              placeholder=""
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="field-net-coin" className="label">Net Coin</label>
-            <input
-              id="field-net-coin"
-              type="number"
-              step="any"
-              {...register('net_coin')}
               className="input-field font-mono"
               placeholder=""
             />

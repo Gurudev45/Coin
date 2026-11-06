@@ -171,10 +171,10 @@ export default function CustomerDetailsPage() {
           Coin Information
         </h2>
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+          <CoinCard label="Net Coin" value={customer.netCoin ?? 0} color="text-teal-400" />
           <CoinCard label="Balance Coin" value={customer.balanceCoin ?? 0} color="text-sky-400" />
           <CoinCard label="Withdraw Coin" value={customer.withdrawCoin ?? 0} color="text-amber-400" />
           <CoinCard label="Withdraw Fee" value={customer.withdrawFee ?? 0} color="text-rose-400" />
-          <CoinCard label="Net Coin" value={customer.netCoin ?? 0} color="text-teal-400" />
           <CoinCard label="Remaining Coin" value={customer.remainingCoin ?? 0} color="text-emerald-400" />
           <CoinCard label="Total Coin" value={customer.totalCoin ?? 0} color="text-violet-400" />
         </div>
