@@ -23,8 +23,17 @@ const AuthContext = createContext<AuthContextType | null>(null);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(() => {
-    const stored = localStorage.getItem('coin_user');
-    return stored ? JSON.parse(stored) : null;
+    try {
+      const stored = localStorage.getItem('coin_user');
+      if (!stored || stored === 'undefined' || stored === 'null') {
+        localStorage.removeItem('coin_user');
+        return null;
+      }
+      return JSON.parse(stored);
+    } catch {
+      localStorage.removeItem('coin_user');
+      return null;
+    }
   });
   const [isLoading, setIsLoading] = useState(true);
 
@@ -32,8 +41,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     // Validate token on mount
     authService.me()
       .then((res) => {
-        setUser(res.data.user);
-        localStorage.setItem('coin_user', JSON.stringify(res.data.user));
+        if (res.data?.user) {
+          setUser(res.data.user);
+          localStorage.setItem('coin_user', JSON.stringify(res.data.user));
+        } else {
+          setUser(null);
+          localStorage.removeItem('coin_user');
+        }
       })
       .catch(() => {
         setUser(null);
@@ -46,8 +60,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const login = async (username: string, password: string) => {
     const res = await authService.login(username, password);
     const { user: userData, token } = res.data;
-    setUser(userData);
-    localStorage.setItem('coin_user', JSON.stringify(userData));
+    if (userData) {
+      setUser(userData);
+      localStorage.setItem('coin_user', JSON.stringify(userData));
+    }
     if (token) localStorage.setItem('auth_token', token);
   };
 
