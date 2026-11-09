@@ -51,7 +51,7 @@ export default function SettingsPage() {
           </div>
           <div className="flex justify-between py-2 border-b border-slate-800">
             <span className="text-slate-400">Token Expiry</span>
-            <span className="text-slate-200">7 days</span>
+            <span className="text-slate-200">1 day (24 hours)</span>
           </div>
           <div className="flex justify-between py-2">
             <span className="text-slate-400">Audit Logging</span>

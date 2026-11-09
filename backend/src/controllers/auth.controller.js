@@ -5,6 +5,14 @@ const { createAuditLog, getClientIP } = require('../utils/auditLog');
 
 const SALT_ROUNDS = 12;
 
+function getTokenExpiryMs() {
+  const expiry = process.env.JWT_EXPIRES_IN || '1d';
+  if (expiry.endsWith('d')) return parseInt(expiry, 10) * 24 * 60 * 60 * 1000;
+  if (expiry.endsWith('h')) return parseInt(expiry, 10) * 60 * 60 * 1000;
+  if (expiry.endsWith('m')) return parseInt(expiry, 10) * 60 * 1000;
+  return 24 * 60 * 60 * 1000;
+}
+
 async function login(req, res) {
   try {
     const { username, password } = req.body;
@@ -37,14 +45,14 @@ async function login(req, res) {
       const token = jwt.sign(
         { userId: customer.id, idName: customer.idName, role: 'customer' },
         process.env.JWT_SECRET,
-        { expiresIn: process.env.JWT_EXPIRES_IN || '7d' }
+        { expiresIn: process.env.JWT_EXPIRES_IN || '1d' }
       );
 
       res.cookie('token', token, {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
         sameSite: 'lax',
-        maxAge: 7 * 24 * 60 * 60 * 1000,
+        maxAge: getTokenExpiryMs(),
       });
 
       await createAuditLog({
@@ -88,14 +96,14 @@ async function login(req, res) {
       const token = jwt.sign(
         { userId: admin.id, username: admin.username, role: admin.role },
         process.env.JWT_SECRET,
-        { expiresIn: process.env.JWT_EXPIRES_IN || '7d' }
+        { expiresIn: process.env.JWT_EXPIRES_IN || '1d' }
       );
 
       res.cookie('token', token, {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
         sameSite: 'lax',
-        maxAge: 7 * 24 * 60 * 60 * 1000,
+        maxAge: getTokenExpiryMs(),
       });
 
       return res.json({
