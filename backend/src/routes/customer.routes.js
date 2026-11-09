@@ -8,7 +8,7 @@ const {
   deleteCustomer,
   resetPassword,
 } = require('../controllers/customer.controller');
-const { authenticate } = require('../middleware/auth.middleware');
+const { authenticate, requireAdmin } = require('../middleware/auth.middleware');
 const {
   customerCreateValidators,
   customerUpdateValidators,
@@ -17,11 +17,16 @@ const {
 
 router.use(authenticate);
 
-router.get('/', getCustomers);
+// Listing all customers requires Admin
+router.get('/', requireAdmin, getCustomers);
+
+// Single customer lookup (Admin can view any; Customers can only view their own)
 router.get('/:id', getCustomer);
-router.post('/', customerCreateValidators, createCustomer);
-router.put('/:id', customerUpdateValidators, updateCustomer);
-router.delete('/:id', deleteCustomer);
-router.post('/:id/reset-password', resetPasswordValidators, resetPassword);
+
+// Management actions require Admin
+router.post('/', requireAdmin, customerCreateValidators, createCustomer);
+router.put('/:id', requireAdmin, customerUpdateValidators, updateCustomer);
+router.delete('/:id', requireAdmin, deleteCustomer);
+router.post('/:id/reset-password', requireAdmin, resetPasswordValidators, resetPassword);
 
 module.exports = router;

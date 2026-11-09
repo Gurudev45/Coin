@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const { exportExcel, exportCsv } = require('../controllers/export.controller');
-const { authenticate } = require('../middleware/auth.middleware');
+const { authenticate, requireAdmin } = require('../middleware/auth.middleware');
 
-router.use(authenticate);
+router.use(authenticate, requireAdmin);
 router.get('/excel', exportExcel);
 router.get('/csv', exportCsv);
 

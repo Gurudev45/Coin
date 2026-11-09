@@ -19,35 +19,18 @@ const authenticate = async (req, res, next) => {
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     
-    let customer = await prisma.customer.findUnique({
+    // Check if token belongs to an admin
+    const admin = await prisma.admin.findUnique({
       where: { id: decoded.userId },
       select: {
         id: true,
-        idName: true,
-        mailId: true,
-        balanceCoin: true,
-        withdrawCoin: true,
-        remainingCoin: true,
-        totalCoin: true,
-        deletedAt: true,
+        username: true,
+        email: true,
+        role: true,
       },
     });
 
-    if (!customer || customer.deletedAt) {
-      const admin = await prisma.admin.findUnique({
-        where: { id: decoded.userId },
-        select: {
-          id: true,
-          username: true,
-          email: true,
-          role: true,
-        },
-      });
-
-      if (!admin) {
-        return res.status(401).json({ error: 'User not found' });
-      }
-
+    if (admin) {
       req.user = {
         id: admin.id,
         idName: admin.username,
@@ -58,7 +41,30 @@ const authenticate = async (req, res, next) => {
       return next();
     }
 
-    req.user = customer;
+    // Otherwise check customer
+    const customer = await prisma.customer.findUnique({
+      where: { id: decoded.userId },
+      select: {
+        id: true,
+        idName: true,
+        mailId: true,
+        balanceCoin: true,
+        withdrawCoin: true,
+        remainingCoin: true,
+        totalCoin: true,
+        netCoin: true,
+        deletedAt: true,
+      },
+    });
+
+    if (!customer || customer.deletedAt) {
+      return res.status(401).json({ error: 'User not found or account deactivated' });
+    }
+
+    req.user = {
+      ...customer,
+      role: 'customer',
+    };
     req.admin = null;
     next();
   } catch (err) {
@@ -72,4 +78,15 @@ const authenticate = async (req, res, next) => {
   }
 };
 
-module.exports = { authenticate };
+/**
+ * Enforce administrator privileges.
+ * Blocks any regular customer account from accessing administrative endpoints.
+ */
+const requireAdmin = (req, res, next) => {
+  if (!req.admin || req.user?.role !== 'admin') {
+    return res.status(403).json({ error: 'Access denied: Administrator privileges required' });
+  }
+  next();
+};
+
+module.exports = { authenticate, requireAdmin };

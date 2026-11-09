@@ -109,6 +109,11 @@ async function getCustomers(req, res) {
 
 async function getCustomer(req, res) {
   try {
+    // Prevent IDOR: Customer can only view their own account; Admin can view any
+    if (!req.admin && req.user?.id !== req.params.id) {
+      return res.status(403).json({ error: 'Access denied: You can only view your own account details' });
+    }
+
     const customer = await prisma.customer.findFirst({
       where: { id: req.params.id, deletedAt: null },
       include: { withdrawals: { orderBy: { createdAt: 'desc' } } },
