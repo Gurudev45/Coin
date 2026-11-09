@@ -15,12 +15,10 @@ function calculateRemainingCoin(balanceCoin, withdrawCoin, withdrawFee) {
 
 /**
  * Calculate Total Coin
- * Formula: Balance Coin (represents the total allocated coins)
- * This can be extended with additional business rules.
+ * Formula: Remaining Coin (Balance Coin - Withdraw Coin)
  */
 function calculateTotalCoin(balanceCoin, withdrawCoin, withdrawFee) {
-  const balance = parseFloat(balanceCoin) || 0;
-  return balance;
+  return calculateRemainingCoin(balanceCoin, withdrawCoin, withdrawFee);
 }
 
 /**

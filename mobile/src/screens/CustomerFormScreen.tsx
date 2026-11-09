@@ -42,7 +42,7 @@ export default function CustomerFormScreen({ route, navigation }: any) {
   const withNum = parseFloat(withdrawCoin) || 0;
   const withdrawFee = Math.round(withNum * 0.05 * 100) / 100;
   const remainingCoin = Math.round((balNum - withNum) * 100) / 100;
-  const totalCoin = Math.round((remainingCoin + withNum + withdrawFee) * 100) / 100;
+  const totalCoin = remainingCoin;
 
   useEffect(() => {
     if (mode === 'edit' && customerId) {

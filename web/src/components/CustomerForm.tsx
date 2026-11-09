@@ -46,7 +46,7 @@ export default function CustomerForm({ customer, onSuccess, isEdit = false }: Cu
   const withdrawFee = watch('withdraw_fee') ? parseFloat(String(watch('withdraw_fee'))) : 0;
   const rawRemaining = balanceCoin - withdrawCoin;
   const remainingCoin = Math.round(rawRemaining * 100) / 100;
-  const totalCoin = Math.round(balanceCoin * 100) / 100;
+  const totalCoin = remainingCoin;
 
   const onSubmit = async (data: CustomerFormData & { password?: string }) => {
     setLoading(true);
@@ -305,7 +305,7 @@ export default function CustomerForm({ customer, onSuccess, isEdit = false }: Cu
             <div className="input-field font-mono bg-slate-700/30 text-sky-400 cursor-not-allowed">
               {Number.isInteger(totalCoin) ? totalCoin : totalCoin.toFixed(2)}
             </div>
-            <p className="text-xs text-slate-500 mt-1">= Balance Coin</p>
+            <p className="text-xs text-slate-500 mt-1">= Remaining Coin</p>
           </div>
         </div>
       </div>

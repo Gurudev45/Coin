@@ -101,7 +101,7 @@ async function main() {
   for (const c of customers) {
     const withdrawFee = Math.round(c.withdrawCoin * 0.05 * 100) / 100;
     const remainingCoin = Math.round((c.balanceCoin - c.withdrawCoin) * 100) / 100;
-    const totalCoin = Math.round((remainingCoin + c.withdrawCoin + withdrawFee) * 100) / 100;
+    const totalCoin = remainingCoin;
     const passwordHash = await bcrypt.hash(c.password, 12);
 
     await prisma.customer.upsert({
