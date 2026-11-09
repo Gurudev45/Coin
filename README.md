@@ -91,12 +91,6 @@ npx prisma db push --schema=../prisma/schema.prisma
 node ../prisma/seed.js
 ```
 
-Default Admin Credentials:
-- **Username:** `admin`
-- **Password:** `Admin@123456`
-
----
-
 ### Step 2: Running the Shared Backend API
 
 ```bash
